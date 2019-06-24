@@ -1,0 +1,94 @@
+﻿@model BellSupportSystem.Models.SupportTickets
+@{
+    ViewBag.Title = "SupportTicket";
+}
+
+<h2>Enter details for creating the ticket</h2>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+<script type="text/javascript">
+    $(function () {
+        if ($("#RequestedBy option").length > 1) {
+            $("#RequestedBy").removeAttr("disabled");
+        }
+    });
+
+    $(document).ready(function () {
+        $("#btnsubmit").click(function () {
+            var model = {
+                ProjectName: $("#ProjectName").val(),
+                DateTimeReceived: $("#DateTimeReceived").val(),
+                Department: $("#Department").val(),
+                RequestedBy: $("#RequestedBy").val(),
+                Description: $("#Description").val(),
+            };
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Save", "SupportTicket")',
+                data:model,
+            dataType: "json",
+
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.responseText);
+                    } else {
+                        alert(response.responseText);
+                    }
+                },
+                error: function (response) {
+                    alert("error!");  //
+                }
+            })
+            return false;
+        });
+    });
+</script>
+
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div class="row">
+            <div class="col-sm-2">
+                @Html.LabelFor(Model => Model.ProjectName)
+            </div>
+            <div class="col-sm-3">
+                @Html.TextBoxFor(Model => Model.ProjectName)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                @Html.LabelFor(Model => Model.DateTimeReceived)
+            </div>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(Model => Model.DateTimeReceived)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                @Html.LabelFor(Model => Model.Department)
+            </div>
+            <div class="col-sm-3">
+                @Html.DropDownListFor(m => m.Department, Model.Departments, "Please select", new { onchange = "document.forms[0].submit();" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                @Html.LabelFor(Model => Model.RequestedBy)
+            </div>
+            <div class="col-sm-3">
+                @Html.DropDownListFor(m => m.RequestedBy, Model.RequestedByList, "Please select", new { disabled = "disabled" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                @Html.LabelFor(Model => Model.Description)
+            </div>
+            <div class="col-sm-3">
+                @Html.TextBoxFor(Model => Model.Description)
+            </div>
+            </div>
+
+
+            <input class="btnsubmit" id="btnsubmit" type="submit" value="Submit" />
+</fieldset>
+}

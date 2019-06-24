@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "FilterSupportTicket";
+}
+
+<h2>Filter tickets by following options</h2>
+
+@model BellSupportSystem.Models.FilterSupportTicket
+@using (Html.BeginForm())
+{
+    <fieldset>
+
+        <div class="row">
+            <div class="col-sm-2">
+                @Html.LabelFor(Model => Model.FilterBy)
+            </div>
+            <div class="col-sm-4">
+                @Html.DropDownListFor(m=>m.FilterBy, new List<SelectListItem>
+    {
+        new SelectListItem{Text = "ProjectName", Value = "ProjectName"},
+        new SelectListItem{Text = "DateTimeReceived", Value = "DateTimeReceived" },
+        new SelectListItem{ Text = "Department", Value = "Department"  },
+        new SelectListItem{Text = "RequestedBy", Value = "RequestedBy" },
+        new SelectListItem{Text = "Description", Value = "Description" },
+     })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                @Html.LabelFor(Model => Model.Text)
+            </div>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(Model => Model.Text)
+            </div>
+        </div>
+        <input class="btnsubmit" id="btnsubmit" type="submit" value="Submit" />
+    </fieldset>
+}

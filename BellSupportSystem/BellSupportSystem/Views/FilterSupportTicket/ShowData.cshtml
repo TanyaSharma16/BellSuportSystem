@@ -1,0 +1,22 @@
+﻿@model IEnumerable<BellSupportSystem.SupportTicket>
+
+@{
+    WebGrid grid = new WebGrid(source: Model);
+}
+@grid.GetHtml(
+     tableStyle: "table table-bordered",
+    headerStyle: "info",
+    footerStyle: "webgrid-footer",
+    alternatingRowStyle: "webgrid-alternating-row",
+    selectedRowStyle: "webgrid-selected-row",
+    rowStyle: "gridrow",
+columns: new[]
+
+{
+    grid.Column("ProjectName"),
+    grid.Column("DateTimeReceived"),
+    grid.Column("Department"),
+    grid.Column("RequestedBy"),
+    grid.Column("Description"),
+}
+)
